@@ -10,3 +10,6 @@ ChatGPTをDiscord上で使用できるBotです。
 ```
 docker compose up -d
 ```
+# Author
+
+[Raisan(@code-raisan)](https://github.com/code-raisan/)
