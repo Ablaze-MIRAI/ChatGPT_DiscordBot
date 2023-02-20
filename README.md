@@ -1,6 +1,7 @@
 # ChatGPT Discord Bot
 
 ChatGPTをDiscord上で使用できるBotです。
+
 ※正確にはChatGPTではなく`OpenAI text-davinci-003`というAPIを使用しています。
 
 # Run
