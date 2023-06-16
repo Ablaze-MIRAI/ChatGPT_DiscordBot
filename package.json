@@ -6,13 +6,16 @@
     "build": "tsc"
   },
   "dependencies": {
-    "discord.js": "^14.7.1",
-    "openai": "^3.1.0",
-    "tsc": "^2.0.4",
-    "typescript": "^4.9.3"
+    "chatgpt": "^5.2.5",
+    "discord.js": "^14.11.0",
+    "tsc": "^2.0.4"
   },
   "devDependencies": {
+    "@types/node": "^20.3.1",
+    "typescript": "^4.9.3",
     "nodemon": "^2.0.20",
     "ts-node": "^10.9.1"
-  }
+  },
+  "packageManager": "yarn@3.4.1",
+  "private": true
 }

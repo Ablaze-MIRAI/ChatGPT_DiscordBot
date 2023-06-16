@@ -1,13 +1,14 @@
 import { Client, GatewayIntentBits, Events, EmbedBuilder } from "discord.js";
-import { Configuration, OpenAIApi } from "openai";
+import { ChatGPTUnofficialProxyAPI } from "chatgpt";
+import { exit } from "process";
 import slashcommands from "./slashcommands";
 import utils from "./utils";
 import chatgpt from "./chatgpt";
 import env from "./env";
 
-const configuration = new Configuration({ apiKey: env.OPENAI_API_TOKEN });
-const openai = new OpenAIApi(configuration);
+if(!env.CHATGPT_ACCESS_TOKEN){ utils.Logger.error("The token could not be found"); exit(1); };
 
+const api = new ChatGPTUnofficialProxyAPI({ accessToken: env.CHATGPT_ACCESS_TOKEN });
 const client: Client = new Client({
     intents: [ GatewayIntentBits.Guilds ]
 });
@@ -51,7 +52,7 @@ client.on(Events.InteractionCreate, async (interaction) =>{
 client.on(Events.InteractionCreate, async (interaction) =>{
     if(!interaction.isModalSubmit()) return;
     try{
-        await chatgpt.modalSubmit(interaction, openai);
+        await chatgpt.modalSubmit(interaction, api);
     }catch(e: any){
         utils.Logger.error(e);
     }

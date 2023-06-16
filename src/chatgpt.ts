@@ -1,4 +1,5 @@
-import { ModalBuilder, ActionRowBuilder, ModalActionRowComponentBuilder, TextInputBuilder, TextInputStyle, EmbedBuilder } from "discord.js";
+import { ModalBuilder, ActionRowBuilder, ModalActionRowComponentBuilder, TextInputBuilder, TextInputStyle, EmbedBuilder, Embed } from "discord.js";
+import { ChatGPTUnofficialProxyAPI } from "chatgpt";
 import env from "./env";
 import utils from "./utils";
 
@@ -9,7 +10,7 @@ export default {
         modal.addComponents(new ActionRowBuilder<ModalActionRowComponentBuilder>().addComponents(PromptInput));
         await interaction.showModal(modal);
     },
-    modalSubmit: async (interaction: any, openai: { createCompletion: (arg0: { model: string; prompt: any; max_tokens: number; }) => any; }) =>{
+    modalSubmit: async (interaction: any, api: ChatGPTUnofficialProxyAPI) =>{
         utils.Logger.info("Excuting...");
         await interaction.deferReply().catch((e: any) =>{
             interaction.reply({embeds: [utils.Embed.error("ERROR", "送信時に何らかのエラーが発生しました")]});
@@ -18,12 +19,7 @@ export default {
 
         const nowTime = new Date().getTime();
         const prompt = interaction.fields.getTextInputValue("prompt-input");
-        const completion = await openai.createCompletion({
-            model: env.OPENAI_API_MODEL,
-            prompt: prompt,
-            max_tokens: env.OPENAI_API_MAX_TOKEN
-        });
-        const result = completion.data.choices[0].text;
+        const result = await api.sendMessage(prompt);
 
         const processed_time = (new Date().getTime()) - nowTime;
         const embed = new EmbedBuilder().setTitle(prompt).setDescription(result).setFooter({text: `${processed_time/1000}s(${processed_time}ms) | ChatGPT/OpenAI`}).setColor(utils.ColorHex("#c4ff89"));

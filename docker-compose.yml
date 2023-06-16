@@ -6,4 +6,4 @@ services:
     restart: always
     environment:
       - DISCORD_API_TOKEN=<token>
-      - OPENAI_API_TOKEN=<token>
+      - OPENAI_ACCESS_TOKEN=<token>
